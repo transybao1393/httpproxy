@@ -31,7 +31,8 @@ func InMemoryResponse(code int, header http.Header, body []byte) *http.Response 
 	}
 	return &http.Response{
 		Status:        fmt.Sprintf("%d%s", code, st),
-		StatusCode:    code,
+		// StatusCode:    code,
+		StatusCode:    201,
 		Proto:         "HTTP/1.1",
 		ProtoMajor:    1,
 		ProtoMinor:    1,
