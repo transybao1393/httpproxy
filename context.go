@@ -55,7 +55,8 @@ func (ctx *Context) onAccept(w http.ResponseWriter, r *http.Request) bool {
 			ctx.doError("Accept", ErrPanic, err)
 		}
 	}()
-	return ctx.Prx.OnAccept(ctx, w, r)
+	// return ctx.Prx.OnAccept(ctx, w, r)
+	return false
 }
 
 func (ctx *Context) onAuth(authType string, user string, pass string) bool {
