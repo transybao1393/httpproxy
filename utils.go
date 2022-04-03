@@ -79,6 +79,7 @@ func ServeResponse(w http.ResponseWriter, resp *http.Response) error {
 	if resp.Request != nil {
 		clientConnection = resp.Request.Header.Get("Connection")
 	}
+	log.Println("clientConnection", clientConnection)
 	switch clientConnection {
 	case "close":
 		h.Set("Connection", "close")
@@ -93,6 +94,7 @@ func ServeResponse(w http.ResponseWriter, resp *http.Response) error {
 			h.Set("Connection", "close")
 		}
 	}
+	log.Println("te", te)
 	switch te {
 	case "":
 		w.WriteHeader(resp.StatusCode)

@@ -333,6 +333,8 @@ func (ctx *Context) doMitm() (w http.ResponseWriter, r *http.Request) {
 
 func (ctx *Context) doRequest(w http.ResponseWriter, r *http.Request) (bool, error) {
 	log.Println("on doRequest")
+	//- if URL is not absolute
+	log.Println("r.URL.IsAbs()", r.URL.IsAbs())
 	if !r.URL.IsAbs() {
 		if r.Body != nil {
 			defer r.Body.Close()
@@ -344,6 +346,7 @@ func (ctx *Context) doRequest(w http.ResponseWriter, r *http.Request) (bool, err
 		return true, err
 	}
 	r.RequestURI = r.URL.String()
+	log.Println("r.RequestURI", r.RequestURI)
 	if ctx.Prx.OnRequest == nil {
 		return false, nil
 	}
