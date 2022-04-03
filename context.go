@@ -6,6 +6,7 @@ import (
 	"crypto/tls"
 	"encoding/base64"
 	"io"
+	"log"
 	"net"
 	"net/http"
 	"strings"
@@ -111,6 +112,7 @@ func (ctx *Context) doAccept(w http.ResponseWriter, r *http.Request) bool {
 	}
 	if ctx.Prx.OnAccept != nil && ctx.onAccept(w, r) {
 		if r.Body != nil {
+			log.Println("request accepted accept, r.Body", r.Body)
 			defer r.Body.Close()
 		}
 		return true
