@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/http/httputil"
 	"regexp"
@@ -23,10 +24,10 @@ func InMemoryResponse(code int, header http.Header, body []byte) *http.Response 
 		st = " " + st
 	}
 	var bodyReadCloser io.ReadCloser
-	var bodyContentLength = int64(0)
+	// var bodyContentLength = int64(0)
 	if body != nil {
 		bodyReadCloser = ioutil.NopCloser(bytes.NewBuffer(body))
-		bodyContentLength = int64(len(body))
+		// bodyContentLength = int64(len(body))
 	}
 	return &http.Response{
 		Status:        fmt.Sprintf("%d%s", code, st),
@@ -36,12 +37,14 @@ func InMemoryResponse(code int, header http.Header, body []byte) *http.Response 
 		ProtoMinor:    1,
 		Header:        header,
 		Body:          bodyReadCloser,
-		ContentLength: bodyContentLength,
+		// ContentLength: bodyContentLength,
+		ContentLength: 2,
 	}
 }
 
 // ServeResponse serves HTTP response to http.ResponseWriter.
 func ServeResponse(w http.ResponseWriter, resp *http.Response) error {
+	log.Println("on ServeResponse")
 	if resp.Body != nil {
 		defer resp.Body.Close()
 	}

@@ -332,6 +332,7 @@ func (ctx *Context) doMitm() (w http.ResponseWriter, r *http.Request) {
 }
 
 func (ctx *Context) doRequest(w http.ResponseWriter, r *http.Request) (bool, error) {
+	log.Println("on doRequest")
 	if !r.URL.IsAbs() {
 		if r.Body != nil {
 			defer r.Body.Close()
