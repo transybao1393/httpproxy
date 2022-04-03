@@ -62,6 +62,7 @@ type Proxy struct {
 
 // NewProxy returns a new Proxy has default CA certificate and key.
 func NewProxy() (*Proxy, error) {
+	log.Println("proxy in NewProxy")
 	return NewProxyCert(nil, nil)
 }
 
