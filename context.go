@@ -49,6 +49,7 @@ type Context struct {
 }
 
 func (ctx *Context) onAccept(w http.ResponseWriter, r *http.Request) bool {
+	log.Println("on accept...")
 	defer func() {
 		if err, ok := recover().(error); ok {
 			ctx.doError("Accept", ErrPanic, err)
