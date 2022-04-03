@@ -2,6 +2,7 @@ package httpproxy
 
 import (
 	"crypto/tls"
+	"log"
 	"net/http"
 	"sync/atomic"
 )
@@ -72,6 +73,7 @@ func NewProxyCert(caCert, caKey []byte) (*Proxy, error) {
 		MitmChunked: true,
 		signer:      NewCaSignerCache(1024),
 	}
+	log.Println("proxy in NewProxyCert", prx)
 	prx.signer.Ca = &prx.Ca
 	if caCert == nil {
 		caCert = DefaultCaCert
