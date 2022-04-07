@@ -6,7 +6,6 @@ import (
 	"crypto/tls"
 	"encoding/base64"
 	"io"
-	"log"
 	"net"
 	"net/http"
 	"strings"
@@ -49,7 +48,6 @@ type Context struct {
 }
 
 func (ctx *Context) onAccept(w http.ResponseWriter, r *http.Request) bool {
-	log.Println("on accept...")
 	defer func() {
 		if err, ok := recover().(error); ok {
 			ctx.doError("Accept", ErrPanic, err)
@@ -114,7 +112,6 @@ func (ctx *Context) doAccept(w http.ResponseWriter, r *http.Request) bool {
 	}
 	if ctx.Prx.OnAccept != nil && ctx.onAccept(w, r) {
 		if r.Body != nil {
-			log.Println("request accepted accept, r.Body", r.Body)
 			defer r.Body.Close()
 		}
 		return true
@@ -332,9 +329,7 @@ func (ctx *Context) doMitm() (w http.ResponseWriter, r *http.Request) {
 }
 
 func (ctx *Context) doRequest(w http.ResponseWriter, r *http.Request) (bool, error) {
-	log.Println("on doRequest")
 	//- if URL is not absolute
-	log.Println("r.URL.IsAbs()", r.URL.IsAbs())
 	if !r.URL.IsAbs() {
 		if r.Body != nil {
 			defer r.Body.Close()
@@ -346,7 +341,6 @@ func (ctx *Context) doRequest(w http.ResponseWriter, r *http.Request) (bool, err
 		return true, err
 	}
 	r.RequestURI = r.URL.String()
-	log.Println("r.RequestURI", r.RequestURI)
 	if ctx.Prx.OnRequest == nil {
 		return false, nil
 	}

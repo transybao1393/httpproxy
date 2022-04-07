@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/http/httputil"
 	"regexp"
@@ -45,7 +44,6 @@ func InMemoryResponse(code int, header http.Header, body []byte) *http.Response 
 
 // ServeResponse serves HTTP response to http.ResponseWriter.
 func ServeResponse(w http.ResponseWriter, resp *http.Response) error {
-	log.Println("on ServeResponse")
 	if resp.Body != nil {
 		defer resp.Body.Close()
 	}
@@ -79,7 +77,6 @@ func ServeResponse(w http.ResponseWriter, resp *http.Response) error {
 	if resp.Request != nil {
 		clientConnection = resp.Request.Header.Get("Connection")
 	}
-	log.Println("clientConnection", clientConnection)
 	switch clientConnection {
 	case "close":
 		h.Set("Connection", "close")
@@ -94,7 +91,6 @@ func ServeResponse(w http.ResponseWriter, resp *http.Response) error {
 			h.Set("Connection", "close")
 		}
 	}
-	log.Println("te", te)
 	switch te {
 	case "":
 		w.WriteHeader(resp.StatusCode)

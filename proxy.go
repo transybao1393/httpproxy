@@ -2,7 +2,6 @@ package httpproxy
 
 import (
 	"crypto/tls"
-	"log"
 	"net/http"
 	"sync/atomic"
 )
@@ -66,7 +65,6 @@ func SayHello() string {
 
 // NewProxy returns a new Proxy has default CA certificate and key.
 func NewProxy() (*Proxy, error) {
-	log.Println("proxy in NewProxy")
 	return NewProxyCert(nil, nil)
 }
 
@@ -78,7 +76,6 @@ func NewProxyCert(caCert, caKey []byte) (*Proxy, error) {
 		MitmChunked: true,
 		signer:      NewCaSignerCache(1024),
 	}
-	log.Println("proxy in NewProxyCert", prx.AuthType)
 	prx.signer.Ca = &prx.Ca
 	if caCert == nil {
 		caCert = DefaultCaCert
